@@ -172,6 +172,7 @@ void showTemp(string temp) {
 			}
 			else {
 				is_integer = false;
+				break;
 			}
 		}
 		if (is_integer) {
