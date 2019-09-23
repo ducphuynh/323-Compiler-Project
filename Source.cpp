@@ -154,15 +154,13 @@ if all others are not found.
 */
 void showTemp(string temp) {
 	if (temp != "") {
-		bool is_keyword = 0;
 		for (int i = 0; i < 20; i++) {
 			if (KEYWORDS[i] == temp) {
 				output.push_back(pair<string, string>("Keyword ", temp));
 				return;
 			}
 		}
-		is_keyword = 1;
-		if (isalpha(temp[0]) && is_keyword == 1) {
+		if (isalpha(temp[0])) {
 			output.push_back(pair<string, string>("Identifier ", temp));
 			return;
 		}
@@ -174,7 +172,6 @@ void showTemp(string temp) {
 			}
 			else {
 				is_integer = false;
-				break;
 			}
 		}
 		if (is_integer) {
