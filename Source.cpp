@@ -19,7 +19,7 @@ int FSM[6][7] = {
  1,2,4,0,0,0,0,
  1,1,4,0,0,0,0,
  5,2,4,0,3,0,0,
- 5,3,4,0,5,0,0,
+ 5,3,4,0,3,0,0, // Changed [3][4] to 3 to ensure it stays in state 3 for real numbers
  4,4,0,4,4,4,4,
  0,0,0,0,0,0,0
 };
@@ -51,6 +51,10 @@ int testChar(char ch, int state) {
 		return present_state;
 	}
 	else if (ch == OPERATORS[15]) {
+		present_state = FSM[present_state][4];
+		return present_state;
+	}
+	else if (ch == OPERATORS[16]) { // Checked for decimal point for real numbers
 		present_state = FSM[present_state][4];
 		return present_state;
 	}
@@ -164,26 +168,55 @@ void showTemp(string temp) {
 			output.push_back(pair<string, string>("Identifier ", temp));
 			return;
 		}
-		bool is_integer = false;
+		bool isInteger = false;
 		for (int i = 0; i < temp.length(); i++) {
 			if (isdigit(temp[i])) {
-				is_integer = true;
+				isInteger = true;
 				continue;
 			}
 			else {
-				is_integer = false;
+				isInteger = false;
 				break;
 			}
 		}
-		if (is_integer) {
+		if (isInteger) {
 			output.push_back(pair<string, string>("Integer ", temp));
 			return;
 		}
-		int test_float = 0;
-		for (int i = 0; i < temp.length(); i++) {
-			if (temp[i] == '.') {
-				test_float = 1;
+		bool hasDecimalPoint = false;
+		int decimalPointPosition;
+		for (decimalPointPosition = 0; decimalPointPosition < temp.length(); decimalPointPosition++) {
+			if (temp[decimalPointPosition] == '.') {
+				hasDecimalPoint = true;
 				break;
+			}
+		}
+		if (hasDecimalPoint) {
+			bool lefthandIsInteger = false;
+			bool righthandIsInteger = false;
+			for (int i = 0; i < decimalPointPosition; i++) {
+				if (isdigit(temp[i])) {
+					lefthandIsInteger = true;
+					continue;
+				}
+				else {
+					lefthandIsInteger = false;
+					break;
+				}
+			}
+			for (int i = decimalPointPosition + 1; i < temp.length(); i++) {
+				if (isdigit(temp[i])) {
+					righthandIsInteger = true;
+					continue;
+				}
+				else {
+					righthandIsInteger = false;
+					break;
+				}
+			}
+			if (lefthandIsInteger && righthandIsInteger) {
+				output.push_back(pair<string, string>("Real    ", temp));
+				return;
 			}
 		}
 		output.push_back(pair<string, string>("Invalid ", temp));
