@@ -235,15 +235,23 @@ the input was a Separator or Operator WITH EXCEPTION to whitespace
 void showchar2(char ch, char ch2)// this would go through the second char
 {
 	string temp = string(1, ch);
-	string temp2 = string(2, ch2);
+	string temp2 = string(1, ch2);
 	string temp3 = temp + temp2; //this worked but not strcat
-	for (int i = 0; i < 8; i++) {
+	int notMatch = 0; //keep count if ch2 does not match with operators
+	for (int i = 0; i < 8; i++)
+	{
 		if (ch2 == OPERATORS[i]) {
 			output.push_back(pair<string, string>("operator ", temp3));// gives the operators together
 		}
-		//else
-			//output.push_back(pair<string, string>("Operator ", temp));
+		else {
+			notMatch++;
+		}
 	}
+	if (notMatch == 8) // if this it true then it will only pushback ch1 that was the only operator
+	{
+		output.push_back(pair<string, string>("Operator ", temp));
+	}
+
 }
 
 void showChar(char ch, char ch2) {
