@@ -7,7 +7,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include<string.h>
 using namespace std;
 // operator list
 char OPERATORS[21] = { '*','+','-','=','/','>','<','%','\'','(',')','{','}','[',']',',','.',':',';','!',' ' };
@@ -237,10 +236,10 @@ void showchar2(char ch, char ch2)// this would go through the second char
 {
 	string temp = string(1, ch);
 	string temp2 = string(2, ch2);
-	strcat(temp, temp2); // this is not working but theoretically it should put the two strings together
+	string temp3 = temp + temp2; //this worked but not strcat
 	for (int i = 0; i < 8; i++) {
 		if (ch2 == OPERATORS[i]) {
-			output.push_back(pair<string, string>("operator ", temp));
+			output.push_back(pair<string, string>("operator ", temp3));// gives the operators together
 		}
 		//else
 			//output.push_back(pair<string, string>("Operator ", temp));
