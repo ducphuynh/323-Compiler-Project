@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include<string.h>
 using namespace std;
 // operator list
 char OPERATORS[21] = { '*','+','-','=','/','>','<','%','\'','(',')','{','}','[',']',',','.',':',';','!',' ' };
@@ -79,13 +80,14 @@ int testChar(char ch, int state) {
 }
 // pre defined function
 void showTemp(string temp);
-void showChar(char ch);
+void showChar(char ch, char ch2);
+void showchar2(char ch, char ch2);
 string oFile = "output.txt";
 vector<pair<string, string>> output;
 int main() {
 	string filename, input = "", temp;
 	int currentState = 0, stringlength = 0;
-	char ch;
+	char ch, ch2;
 	// ask user for input file
 	cout << "What is the file name?: "; cin >> filename;
 	ifstream inFile(filename);
@@ -109,13 +111,14 @@ int main() {
 		stringlength = input.length();
 		for (int i = 0; i < stringlength; i++) {
 			ch = input[i];
+			ch2 = input[i + 1];// made a second char input so we can look through char1 and char2
 			if (currentState != 4) {
-				currentState = testChar(ch, currentState); //State Transition Call
+				currentState = testChar(ch, currentState);//State Transition Call
 				switch (currentState) {
 					// when a seperator or operator is entered
 				case 0:
 					showTemp(temp);
-					showChar(ch);
+					showChar(ch, ch2);
 					temp = "";
 					break;
 					// concatenate as long as valid input
@@ -131,7 +134,8 @@ int main() {
 					// invalid inputs
 				case 5:
 					showTemp(temp);
-					showChar(ch);
+					showChar(ch, ch2);
+
 					temp = "";
 					break;
 				}
@@ -228,12 +232,29 @@ This function is called when a seperator, operator, or invalid word
 is entered. Once entered it will test the variable to see whether
 the input was a Separator or Operator WITH EXCEPTION to whitespace
 */
-void showChar(char ch) {
+
+void showchar2(char ch, char ch2)// this would go through the second char
+{
 	string temp = string(1, ch);
+	string temp2 = string(2, ch2);
+	strcat(temp, temp2); // this is not working but theoretically it should put the two strings together
+	for (int i = 0; i < 8; i++) {
+		if (ch2 == OPERATORS[i]) {
+			output.push_back(pair<string, string>("operator ", temp));
+		}
+		//else
+			//output.push_back(pair<string, string>("Operator ", temp));
+	}
+}
+
+void showChar(char ch, char ch2) {
+	string temp = string(1, ch);
+	//string temp2 = string(2, ch2);
 	for (int i = 0; i < 8; i++) {
 		if (ch == OPERATORS[i]) {
-			output.push_back(pair<string, string>("Operator ", temp));
+			showchar2(ch, ch2);// this goes throught the first char
 		}
+
 	}
 	for (int i = 8; i < 22; i++) {
 		if (ch == OPERATORS[i] && !isspace(ch)) {
