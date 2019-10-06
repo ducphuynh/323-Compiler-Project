@@ -79,14 +79,15 @@ int testChar(char ch, int state) {
 }
 // pre defined function
 void showTemp(string temp);
-void showChar(char ch, char ch2);
-void showchar2(char ch, char ch2);
+bool showChar(char ch, char ch2);
+bool showchar2(char ch, char ch2);
 string oFile = "output.txt";
 vector<pair<string, string>> output;
 int main() {
 	string filename, input = "", temp;
 	int currentState = 0, stringlength = 0;
 	char ch, ch2;
+	bool state;
 	// ask user for input file
 	cout << "What is the file name?: "; cin >> filename;
 	ifstream inFile(filename);
@@ -117,7 +118,11 @@ int main() {
 					// when a seperator or operator is entered
 				case 0:
 					showTemp(temp);
-					showChar(ch, ch2);
+					state=showChar(ch, ch2);
+					if (state == true)
+					{
+						i++;
+					}
 					temp = "";
 					break;
 					// concatenate as long as valid input
@@ -133,8 +138,11 @@ int main() {
 					// invalid inputs
 				case 5:
 					showTemp(temp);
-					showChar(ch, ch2);
-
+					state=showChar(ch, ch2);
+					if (state == true)
+					{
+						i++;
+					}
 					temp = "";
 					break;
 				}
@@ -232,7 +240,7 @@ is entered. Once entered it will test the variable to see whether
 the input was a Separator or Operator WITH EXCEPTION to whitespace
 */
 
-void showchar2(char ch, char ch2)// this would go through the second char
+bool showchar2(char ch, char ch2)// this would go through the second char
 {
 	string temp = string(1, ch);
 	string temp2 = string(1, ch2);
@@ -250,22 +258,30 @@ void showchar2(char ch, char ch2)// this would go through the second char
 	if (notMatch == 8) // if this it true then it will only pushback ch1 that was the only operator
 	{
 		output.push_back(pair<string, string>("Operator ", temp));
+		return false;
 	}
+	else 
+		return true;
 
 }
 
-void showChar(char ch, char ch2) {
+bool showChar(char ch, char ch2) {
 	string temp = string(1, ch);
 	//string temp2 = string(2, ch2);
 	for (int i = 0; i < 8; i++) {
 		if (ch == OPERATORS[i]) {
-			showchar2(ch, ch2);// this goes throught the first char
+			bool state=showchar2(ch, ch2);// this goes throught the first char
+			if (state == true)
+			{
+				return true;
+			}
 		}
 
 	}
 	for (int i = 8; i < 22; i++) {
 		if (ch == OPERATORS[i] && !isspace(ch)) {
 			output.push_back(pair<string, string>("Separator ", temp));
+			return false;
 		}
 	}
 }
