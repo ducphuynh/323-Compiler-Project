@@ -1,0 +1,52 @@
+function convert1x (fahr int)
+{
+	return 5 * (fahr -32)/9;
+}
+
+%%
+	int low, high,step;
+
+	get(low, high, step);
+	while (low <= high)
+	{ put(low);
+	  put(convert1x(low));
+	  low = low + step;
+	}
+%%
+34.00
+%%
+
+
+
+int i, max, sum;
+
+boolean myBool;
+
+sum = 0;
+
+i = 1;
+
+if (true == true)
+
+{
+
+    return 5;
+
+    return 7.77;
+
+}
+
+endif
+
+get (max);
+
+while (i <=  max)
+
+ {
+
+    sum = sum + i;
+
+    i = i + 1;
+
+}
+
