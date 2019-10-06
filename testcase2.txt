@@ -1,10 +1,10 @@
-int num1, num2, larg$e
+int num1, num2, large
 
 if(num1 >= num2)
 
 {
 
-	large = num1$;
+	large = num1;
 
 }
 
@@ -12,6 +12,6 @@ else
 
 {
 	11.00
-	large = num2$;
+	large = num2;
 
 }
