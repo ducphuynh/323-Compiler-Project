@@ -1,0 +1,19 @@
+%%
+
+int i,x,y,total;
+
+x = 3;
+
+y = 9;
+
+i = 1;
+
+
+
+total = x + y - i;
+
+
+
+put(total);
+
+<= 99
