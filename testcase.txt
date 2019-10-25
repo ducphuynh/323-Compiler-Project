@@ -1,0 +1,9 @@
+! this is comment for this sample code which converts Fahrenheit into Celsius !
+
+function convert$ [fahr:int]
+{
+           return 5 * (fahr -32) / 9;
+}
+%%
+int fahr = 84;
+put(convert$(fahr));
