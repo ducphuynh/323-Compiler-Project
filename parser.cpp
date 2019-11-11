@@ -26,7 +26,7 @@ enum Token {
 enum Character {
 	LETTER, DIGIT, DOLLAR_SIGN, PERIOD, COMMENT, UNKNOWN, E_O_F
 };
-
+string filename;
 class Lexer {
 private:
 	Character characterClass;
@@ -43,15 +43,15 @@ private:
 public:
 	Lexer();
 	Token lexer();
-	void checkFile(string);
+	void checkFile();
 	char* getLexeme();
 };
 
 Lexer::Lexer() {
-	//if ((in_fp = std::fopen(filename.c_str, "r")) == NULL)
-	//	cout << "ERROR - cannot open file" << endl;
+	if ((in_fp = std::fopen(filename.c_str(), "r")) == NULL)
+		cout << "ERROR - cannot open file" << endl;
 }
-void Lexer::checkFile(string filename) {
+void Lexer::checkFile() {
 
 	if ((in_fp = std::fopen(filename.c_str(), "r")) == NULL)
 		cout << "ERROR - cannot open file" << endl;
@@ -302,7 +302,7 @@ char* Lexer::getLexeme() {
 
 class Parser {
 public:
-	Parser(string);
+	Parser();
 private:
 	Token token, nonComment();
 	Lexer lex;
@@ -395,9 +395,8 @@ void Parser::printToken(Token token, string lexeme) {
 	}
 }
 
-Parser::Parser(string filename) {
+Parser::Parser() {
 	// Remove Blank
-	lex.checkFile(filename);
 	token = lex.lexer();
 	printToken(token, lex.getLexeme());
 	RAT19F();
@@ -812,10 +811,9 @@ void Parser::Empty() {
 }
 
 int main() {
-	//Parser Parser(filename);
-	string filename;
+
 	cout << "Enter file name ";
 	cin >> filename;
-	Parser Parser(filename);
+	Parser Parser;
 	system("pause");
 }
